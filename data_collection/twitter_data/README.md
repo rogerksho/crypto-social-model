@@ -1,5 +1,5 @@
 ## twitter data
-because of twitter's extremely strict :( api policies, the data cap made it hard to collect tweets through the api, hence twitter data was collected using the [twint](https://github.com/twintproject/twint/wiki) with the date ranges (yyyy-mm-dd):
+because of twitter's extremely strict :( api policies, the data cap made it hard to collect tweets through the api, hence twitter data was collected using the [twint](https://github.com/twintproject/twint/wiki) package with the date ranges (yyyy-mm-dd):
 > since: 2016-01-01
 
 > before: 2021-04-01
