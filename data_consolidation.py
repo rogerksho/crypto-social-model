@@ -40,8 +40,7 @@ with open("data_collection/google_data/google_trends.csv", "r") as f:
     for row in reader:
         google_trend.append(float(row[1]))
 
-#twitter_file_name = "sentiment_data_consolidated.csv"
-twitter_file_name = "updated.csv"
+twitter_file_name = "sentiment_data_consolidated.csv"
 
 # twitter data
 with open(f"data_collection/twitter_data/{twitter_file_name}", "r") as f:
@@ -78,7 +77,7 @@ df.to_csv("consolidated_data.csv")
 # print(df['px_change'].corr(df['google_trend'], method='spearman'))
 
 # dataframe stats
-print('sample size below 4000: ', np.sum(twitter_sample_size_np < 4000))
+print('sample size below 4000: ', np.sum(twitter_sample_size_np < 500))
 print('btc data size: ', len(coin_price_change))
 print('google data size: ', len(google_trend))
 print('twitter data size: ', len(twitter_sentiment))
