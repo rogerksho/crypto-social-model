@@ -37,14 +37,16 @@ async function driverFunc() {
         await fetchGoogleTrends(searchTerm, currentStartTime, currentEndTime)
         .catch((e) => console.error(e))
     
+        // shift date
         currentStartTime = new Date(currentEndTime.valueOf())
-        currentStartTime.setMonth(currentStartTime.getMonth(), currentStartTime.getDay() + 1)
+        currentStartTime.setDate(currentStartTime.getDate() + 1)
+
+        // 6 months gives daily resolution
         currentEndTime.setMonth(currentStartTime.getMonth() + 6)
     }
 }
 
 async function printFile() {
-    console.log(finalDataObject)
     let jsonString = JSON.stringify({...finalDataObject}, null, '\t')
     
     fs.writeFile("googletrends.json", jsonString, function(err) {

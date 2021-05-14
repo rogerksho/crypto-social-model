@@ -1,5 +1,6 @@
 import twint
 import csv
+import os
 import pandas
 from datetime import date, timedelta
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
@@ -11,8 +12,8 @@ MAX_TRIES = 100
 analyzer = SentimentIntensityAnalyzer()
 
 # iso format, yyyy-mm-dd
-START_DATE = date.fromisoformat("2016-06-17")
-END_DATE = date.fromisoformat("2021-04-01")
+START_DATE = date.fromisoformat("2016-01-01")
+END_DATE = date.fromisoformat("2016-01-04")
 
 # twint config
 c = twint.Config()
@@ -31,7 +32,7 @@ current_date = START_DATE
 daily_sentiment = []
 
 # while
-while(current_date < END_DATE):
+while(current_date <= END_DATE):
     # per day stuff
     sentiment_sum = 0.0
     neg_sent = 0
@@ -47,6 +48,8 @@ while(current_date < END_DATE):
         try:
             twint.run.Search(c)
         except Exception as e:
+            print("ERROR... retrying...")
+            os.system("say ERROR")
             continue
         break
 
@@ -89,7 +92,7 @@ while(current_date < END_DATE):
     current_date += timedelta(days=1)
 
     # writes to csv after each scrape
-    with open("sentiment_data.csv", "a") as fp:
+    with open("sentiment_data_gaps.csv", "a") as fp:
         writer = csv.writer(fp, delimiter=",")
         writer.writerow(sentiment_tuple)
 
