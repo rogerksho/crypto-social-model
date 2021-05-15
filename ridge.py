@@ -6,6 +6,7 @@ from sklearn.ensemble import AdaBoostRegressor
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+from joblib import dump, load
 
 df = pd.read_csv('data_collection/consolidated_data_bare.csv', index_col=[0], parse_dates=True, infer_datetime_format=True)
 # shape(1918, 4)
@@ -17,9 +18,6 @@ df_test =  df[-200:]
 def print_shapes():
     print(df_train.shape)
     print(df_test.shape)
-
-print_shapes()
-print(df_test.head)
 
 # visualise data
 def visualise_data():
@@ -66,16 +64,15 @@ y_svr = svr.predict(x_test)
 def visualise_predictions():
     x_test_range = range(1, 201)
 
-    plt.plot(x_test_range, y_clf, label='br')
+    
     plt.plot(x_test_range, y_eln, label='eln')
     plt.plot(x_test_range, y_svr, label='svr')
+    plt.plot(x_test_range, y_clf, label='br')
     plt.plot(x_test_range, y_test, label='actual')
 
 
     plt.legend()
     plt.show()
-
-visualise_predictions()
 
 # k-fold cross validation scoring without adaboost, k = CV_NUM
 CV_NUM = 5
@@ -87,6 +84,9 @@ cv_scores_svr = cross_val_score(svr, x_train, y_train, cv=CV_NUM, scoring='neg_r
 print('bayesian ridge: ', cv_scores_clf.mean())
 print('elasticnet: ', cv_scores_eln.mean())
 print('svr: ', cv_scores_svr.mean())
+
+# dump the eln model
+dump(eln, 'elasticnet.joblib') 
 
 # adaboosting
 # NUM_EST = 5
