@@ -18,4 +18,6 @@ for i in range(len(date_list)):
 
 with open("coin_price_bare.csv", "w") as fo:
     writer = csv.writer(fo, delimiter=",")
+    
+    writer.writerow(['time', 'px'])
     writer.writerows(final_price)

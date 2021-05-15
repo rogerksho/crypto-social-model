@@ -50,9 +50,9 @@ with open(f"twitter_data/{twitter_file_name}", "r") as f:
     _ = next(reader)
 
     for row in reader:
-        if int(row[2]) < 4000:
-            print(row)
-            erroneous_dates.append(str(row[0]))
+        # if int(row[2]) < 4000:                     # weed out all sample size < 4000
+        #     print(row)
+        #     erroneous_dates.append(str(row[0]))
         twitter_time.append(row[0])
         twitter_sentiment.append(float(row[1]))
         twitter_sample_size.append(int(row[2]))
@@ -69,8 +69,8 @@ time_series = time_series[:-38]
 ############################################
 
 # combine to df
-df = pd.DataFrame(list(zip(time_series, coin_price_change, google_trend, twitter_sentiment)), columns=['time','px_change','google_trend', 'twitter_sent'])
-df.to_csv("consolidated_data.csv")
+df = pd.DataFrame(list(zip(time_series, coin_price_change, google_trend, twitter_sentiment)), columns=['time','px','google_trend', 'twitter_sent'])
+df.to_csv("consolidated_data_bare.csv", index='time')
 
 
 # dataframe stats
